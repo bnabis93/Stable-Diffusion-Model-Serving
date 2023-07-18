@@ -3,7 +3,7 @@
 """
 
 import argparse
-
+from diffusers import DiffusionPipeline
 
 def parse():
     """
@@ -20,4 +20,8 @@ def parse():
 
 if __name__ == "__main__":
     args = parse()
-    print(args)
+    pipeline = DiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5")
+    pipeline.to(args.device)
+
+    output = pipeline("An image of a squirrel in Picasso style").images[0]
+    output.save("image_of_squirrel_painting.png")
